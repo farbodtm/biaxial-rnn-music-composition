@@ -19,13 +19,20 @@ def loadPieces(dirpath):
 
         name = fname[:-4]
 
-        outMatrix = midiToNoteStateMatrix(os.path.join(dirpath, fname))
+        try:
+            outMatrix = midiToNoteStateMatrix(os.path.join(dirpath, fname))
+        except Warning:
+            print 'Unknown event'
+            continue
+        except:
+            print 'What'
+            continue
         if len(outMatrix) < batch_len:
             continue
 
         pieces[name] = outMatrix
         print "Loaded {}".format(name)
-
+    print "Loaded {} songs".format(len(pieces))
     return pieces
 
 def getPieceSegment(pieces):
